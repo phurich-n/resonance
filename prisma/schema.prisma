@@ -27,6 +27,8 @@ enum VoiceCategory {
   MEDITATION
   MOTIVATIONAL
   PODCAST
+  ADVERTISING
+  VOICEOVER
   CORPORATE
 }
 
@@ -54,7 +56,7 @@ model Voice {
 model Generation {
   id String @id @default(cuid())
 
-  orgId String?
+  orgId String
 
   voiceId String?
   voice   Voice?  @relation(fields: [voiceId], references: [id], onDelete: SetNull)
