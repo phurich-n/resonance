@@ -13,6 +13,8 @@ export default async function TextToSpeech({
 
   prefetch(trpc.voices.getAll.queryOptions());
 
+  prefetch(trpc.genetaions.getAll.queryOptions());
+
   return (
     <HydrateClient>
       <TextToSpeechView initialValues={{ text, voiceId }} />

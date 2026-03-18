@@ -9,7 +9,10 @@ export default async function TextToSpeechDetailPage({
   const { generationId } = await params;
 
   prefetch(trpc.genetaions.getById.queryOptions({ id: generationId }));
+
   prefetch(trpc.voices.getAll.queryOptions());
+
+  prefetch(trpc.genetaions.getAll.queryOptions());
 
   return (
     <HydrateClient>
