@@ -5,6 +5,7 @@ import { Pause, Play, Download } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { VoiceAvatar } from "@/components/voice-avatar/voice-avatar";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 type VoicePreviewMobileVoice = {
   id?: string;
@@ -16,10 +17,11 @@ export function VoicePreviewMobile({
   voice,
   text,
 }: {
-  audioUrl: string,
+  audioUrl: string;
   voice: VoicePreviewMobileVoice | null;
   text: string;
 }) {
+  const isMobile = useIsMobile();
   const selectedVoiceName = voice?.name ?? null;
   const selectedVoiceSeed = voice?.id ?? null;
 
@@ -38,7 +40,8 @@ export function VoicePreviewMobile({
     audio.addEventListener("pause", handlePause);
     audio.addEventListener("ended", handleEnded);
 
-    audio.play().catch(() => { });
+    audio.pause();
+    audio.currentTime = 0;
 
     return () => {
       audio.removeEventListener("play", handlePlay);
@@ -46,6 +49,12 @@ export function VoicePreviewMobile({
       audio.removeEventListener("ended", handleEnded);
     };
   }, [audioUrl]);
+
+  useEffect(() => {
+    if (!isMobile) {
+      audioRef.current?.pause();
+    }
+  }, [isMobile]);
 
   const togglePlayPause = () => {
     const audio = audioRef.current;
@@ -56,6 +65,23 @@ export function VoicePreviewMobile({
     } else {
       audio.play();
     }
+  };
+
+  const handleDownload = () => {
+    const safeName =
+      text
+        .slice(0, 50)
+        .trim()
+        .replace(/[^a-zA-Z0-9]+/g, "-")
+        .replace(/^-|-$/g, "")
+        .toLowerCase() || "speech";
+
+    const link = document.createElement("a");
+    link.href = audioUrl;
+    link.download = `${safeName}.wav`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   if (!audioUrl) return null;
@@ -79,7 +105,7 @@ export function VoicePreviewMobile({
         </div>
 
         <div className="flex items-center gap-2">
-          <Button variant="ghost" size="icon">
+          <Button variant="ghost" size="icon" onClick={handleDownload}>
             <Download className="size-4" />
           </Button>
           <Button
@@ -98,4 +124,4 @@ export function VoicePreviewMobile({
       </div>
     </div>
   );
-}
+};

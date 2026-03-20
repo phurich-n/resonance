@@ -25,7 +25,7 @@ export function TextToSpeechDetailView({
     voicesQuery,
   ] = useSuspenseQueries({
     queries: [
-      trpc.genetaions.getById.queryOptions({ id: generationId }),
+      trpc.generations.getById.queryOptions({ id: generationId }),
       trpc.voices.getAll.queryOptions(),
     ]
   });

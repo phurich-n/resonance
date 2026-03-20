@@ -11,7 +11,7 @@ export function SettingsPanelHistory() {
   const trpc = useTRPC();
 
   const { data: generations } = useSuspenseQuery(
-    trpc.genetaions.getAll.queryOptions(),
+    trpc.generations.getAll.queryOptions(),
   );
 
   if (!generations.length) {

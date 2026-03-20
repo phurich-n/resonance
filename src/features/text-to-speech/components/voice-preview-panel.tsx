@@ -26,7 +26,7 @@ export function VoicePreviewPanel({
   voice,
   text,
 }: {
-  audioUrl: string,
+  audioUrl: string;
   voice: VoicePreviewPanelVoice | null;
   text: string;
 }) {
@@ -182,4 +182,4 @@ export function VoicePreviewPanel({
       </div>
     </div>
   );
-}
+};
