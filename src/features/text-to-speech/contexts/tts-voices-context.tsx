@@ -12,7 +12,7 @@ interface TTSVoicesContextValue {
   customVoices: TTSVoiceItem[];
   systemVoices: TTSVoiceItem[];
   allVoices: TTSVoiceItem[];
-}
+};
 
 const TTSVoicesContext = createContext<TTSVoicesContextValue | null>(null);
 
@@ -28,7 +28,7 @@ export function TTSVoicesProvider({
       {children}
     </TTSVoicesContext.Provider>
   );
-}
+};
 
 export function useTTSVoices() {
   const context = useContext(TTSVoicesContext);
@@ -38,4 +38,4 @@ export function useTTSVoices() {
   }
 
   return context;
-}
+};
